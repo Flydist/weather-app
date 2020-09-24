@@ -8,10 +8,12 @@ const SelectedCity = ({ selectedCityID }) => {
 
   const [currentCityData, setData] = useState({})
   const [loading, isLoading] = useState(false)
+  const [err, isError] = useState(false)
 
   useEffect(() => {
     if (selectedCityID !== '') {
       isLoading(true)
+      isError(false)
       getSelectedCity(selectedCityID)
         .then((res) => {
           const weather = res.consolidated_weather[0]
@@ -27,8 +29,10 @@ const SelectedCity = ({ selectedCityID }) => {
           isLoading(false)
         }
         )
-        .catch((err) =>
+        .catch((err) => {
           console.log(err)
+          isError(true)
+        }
         )
     }
   }, [selectedCityID])
@@ -52,11 +56,16 @@ const SelectedCity = ({ selectedCityID }) => {
       </Col>
     )
   }
+  if (err) {
+    return (
+      <h5>Что-то пошло не так...</h5>
+    )
+  }
 
   return (
     <Col>
       {loading && <Loader />}
-      {!loading &&
+      {!loading && !err &&
         <Container>
           <StyledImage src={imgUrl} width={180} />
           <InfoContainer>

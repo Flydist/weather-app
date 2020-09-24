@@ -11,17 +11,21 @@ const CityButtonsList = ({ searchedValue, handleSelectCity }) => {
 
   const [foundCities, setFoundCities] = useState([])
   const [loading, isLoading] = useState(false)
+  const [err, isError] = useState(false)
 
   useEffect(() => {
     if (searchedValue !== '') {
       isLoading(true)
+      isError(false)
       findSimilarCities(searchedValue)
         .then((res) => {
           setFoundCities(res)
           isLoading(false)
         })
-        .catch((err) =>
+        .catch((err) => {
           console.log(err)
+          isError(true)
+        }
         )
     }
     else {
@@ -30,22 +34,31 @@ const CityButtonsList = ({ searchedValue, handleSelectCity }) => {
 
   }, [searchedValue])
 
+  if (err) {
+    return (
+      <h5>Что-то пошло не так...</h5>
+    )
+  }
+
   return (
     <Col lg={3} md={5} sm={12}>
       <ButtonsContainer>
-        <Row className='flex-column'>
-          {foundCities.length === 0 ? <HelpText>Тут будет список городов</HelpText> : <HelpText>Найденные города:</HelpText>}
-          <div>{loading && <Loader />}</div>
-          {!loading && foundCities.map((city, idx) => {
-            return (
-              <React.Fragment key={idx}>
-                <Col lg={12}>
-                  <StyledButton variant='primary' onClick={() => handleSelectCity(city.woeid)}>{city.title}</StyledButton>
-                </Col>
-              </React.Fragment>
-            )
-          })}
-        </Row>
+        {!err &&
+          <Row className='flex-column'>
+            {foundCities.length === 0 ? <HelpText>Тут будет список городов</HelpText> : <HelpText>Найденные города:</HelpText>}
+            <div>{loading && <Loader />}</div>
+            {!loading && foundCities.map((city, idx) => {
+              return (
+                <React.Fragment key={idx}>
+                  <Col lg={12}>
+                    <StyledButton variant='primary' onClick={() => handleSelectCity(city.woeid)}>{city.title}</StyledButton>
+                  </Col>
+                </React.Fragment>
+              )
+            })}
+          </Row>
+        }
+
       </ButtonsContainer>
     </Col>
   )
