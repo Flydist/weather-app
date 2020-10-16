@@ -8,7 +8,7 @@ import { Container, Row } from 'react-bootstrap'
 function App() {
 
   const [searched, setSearched] = useState('')
-  const [selectedCityID, setSelectedCity] = useState('')
+  const [selectedCityID, setSelectedCity] = useState(null)
   const [error, isError] = useState(false)
 
   const handleSubmit = (e) => {

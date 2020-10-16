@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
 import { SearchContainer, StyledForm } from './SearchCity.styled'
+import PropTypes from 'prop-types'
 
 const SearchCity = ({ handleSubmit }) => {
   return (
@@ -15,5 +16,9 @@ const SearchCity = ({ handleSubmit }) => {
     </SearchContainer>
   )
 }
+
+SearchCity.propTypes = {
+  handleSubmit: PropTypes.func,
+};
 
 export default SearchCity

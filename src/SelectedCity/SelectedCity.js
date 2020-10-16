@@ -3,6 +3,7 @@ import { Col } from 'react-bootstrap'
 import { Container, InfoContainer, CityState, StyledImage, HelpText } from './SelectedCity.styled'
 import Loader from '../Loader/Loader'
 import { getSelectedCity } from '../Asyncs/asyncs'
+import PropTypes from 'prop-types'
 
 const SelectedCity = ({ selectedCityID }) => {
 
@@ -11,7 +12,7 @@ const SelectedCity = ({ selectedCityID }) => {
   const [err, isError] = useState(false)
 
   useEffect(() => {
-    if (selectedCityID !== '') {
+    if (selectedCityID) {
       isLoading(true)
       isError(false)
       getSelectedCity(selectedCityID)
@@ -86,5 +87,9 @@ const SelectedCity = ({ selectedCityID }) => {
     </Col>
   )
 }
+
+SelectedCity.propTypes = {
+  selectedCityID: PropTypes.number,
+};
 
 export default SelectedCity

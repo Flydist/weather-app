@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Col, Row } from 'react-bootstrap'
+import PropTypes from 'prop-types'
 
 import { ButtonsContainer, StyledButton, HelpText } from './CityButtonsList.styled'
 import Loader from '../Loader/Loader'
@@ -63,5 +64,10 @@ const CityButtonsList = ({ searchedValue, handleSelectCity }) => {
     </Col>
   )
 }
+
+CityButtonsList.propTypes = {
+  searchedValue: PropTypes.string,
+  handleSelectCity: PropTypes.func
+};
 
 export default CityButtonsList
