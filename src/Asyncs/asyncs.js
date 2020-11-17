@@ -1,17 +1,18 @@
-const _apiBaseUrl = 'https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api'
+const apiBaseUrl = 'https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api'
 
 export const findSimilarCities = async (searchedValue) => {
-  const response = await fetch(`${_apiBaseUrl}/location/search/?query=${searchedValue}`, {
+  const response = await fetch(`${apiBaseUrl}/location/search/?query=${searchedValue}`, {
     method: 'GET',
     headers: {
-      'Access-Control-Allow-Origin': '*'
-    }
+      'Access-Control-Allow-Origin': '*',
+    },
   })
-  return await response.json()
+  const resJson = await response.json()
+  return resJson
 }
 
 export const getSelectedCity = async (selectedCityID) => {
-  const response = await fetch(`${_apiBaseUrl}/location/${selectedCityID}`)
-
-  return await response.json()
+  const response = await fetch(`${apiBaseUrl}/location/${selectedCityID}`)
+  const resJson = await response.json()
+  return resJson
 }

@@ -1,20 +1,18 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { useState } from 'react'
+import './App.css'
+import { Container, Row } from 'react-bootstrap'
 import SearchCity from './SearchCity/SearchCity'
 import CityButtonsList from './CityButtonsList/CityButtonsList'
 import SelectedCity from './SelectedCity/SelectedCity'
-import { Container, Row } from 'react-bootstrap'
 
 function App() {
-
-  const [searched, setSearched] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
   const [selectedCityID, setSelectedCity] = useState(null)
-  const [error, isError] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const value = e.target.elements.searchInput.value
-    setSearched(value)
+    const { value } = e.target.elements.searchInput
+    setSearchTerm(value)
   }
 
   const handleSelectCity = (selectedID) => {
@@ -24,18 +22,12 @@ function App() {
   return (
     <Container>
       <SearchCity handleSubmit={handleSubmit} />
-      {error && <h5>Что-то пошло не так... Ошибка выведена в консоль</h5>}
-      {!error &&
-        <Row>
-          <CityButtonsList searchedValue={searched} handleSelectCity={handleSelectCity} isError={isError}>
-          </CityButtonsList>
-          <SelectedCity selectedCityID={selectedCityID} isError={isError}>
-          </SelectedCity>
-        </Row>
-      }
-
+      <Row>
+        <CityButtonsList searchedValue={searchTerm} handleSelectCity={handleSelectCity} />
+        <SelectedCity selectedCityID={selectedCityID} />
+      </Row>
     </Container>
-  );
+  )
 }
 
-export default App;
+export default App
